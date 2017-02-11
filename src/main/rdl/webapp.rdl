@@ -39,7 +39,7 @@ type TransactionResult struct {
 
 resource TraderList GET "/prod/traders?q={q}&offset={offset}&count={count}&orderBy={orderBy}" (name=getTraders){
     authenticate;
-    String q (optional);
+    String q (optional, default="");
     Int64 offset (optional, default=0);
     Int32 count (optional, default=50);
     String orderBy (optional, default="-name");
@@ -55,8 +55,8 @@ resource TraderList GET "/prod/traders?q={q}&offset={offset}&count={count}&order
 
 resource TransactionResult GET "/prod/transactions?q={q}&op={op}&sinceId={sinceId}&count={count}&orderBy={orderBy}" (name=getTransactions){
     authenticate;
-    String q (optional);
-    String op (optional);
+    String q (optional, default="");
+    String op (optional, default="");
     String sinceId (optional, default="0");
     Int32 count (optional, default=50);
     String orderBy (optional, default="-value");

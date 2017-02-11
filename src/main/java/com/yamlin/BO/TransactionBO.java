@@ -15,9 +15,9 @@ import java.util.List;
 public class TransactionBO {
     @Inject private TransactionDAO dao;
 
-    TransactionBO(TransactionDAO dao) {
-        this.dao = dao;
-    }
+//    TransactionBO(TransactionDAO dao) {
+//        this.dao = dao;
+//    }
 
     public List<Transaction> getTransactions(String q, String sinceId, Integer count, String orderBy) {
         if (q.contains("startTs=1451606400000") && q.contains("endTs=1483228799000")) {

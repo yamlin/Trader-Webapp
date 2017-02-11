@@ -12,14 +12,14 @@ import java.util.List;
  * Created by yamlin on 2017/2/11.
  */
 public class TraderBO {
-    @Inject
-    private TraderDAO traderDAO;
+    @Inject  private TraderDAO traderDAO;
 
-    TraderBO(TraderDAO dao) {
-        this.traderDAO = dao;
-    }
+//    TraderBO(TraderDAO dao) {
+//        this.traderDAO = dao;
+//    }
 
     public List<Trader> getTrader(String q, Long offset, Integer count, String orderBy) {
+
         if (q.equals("city=Singapore")) {
             List<Trader> result = traderDAO.getTraderFrom("Singapore");
             // do order by...

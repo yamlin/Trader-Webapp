@@ -32,14 +32,16 @@ public class WebappHandlerImpl implements WebappHandler {
     @Override
     public TransactionResult getTransactions(ResourceContext context, String q, String op, String sinceId, Integer count, String orderBy) {
         TransactionResult result = new TransactionResult();
-        if (op != null) {
+        if (op != null && !op.isEmpty()) {
             result.setSummary(transactionBO.getTransactions(q, op));
         } else {
             TransactionList l = new TransactionList();
             List<Transaction> transactionList = transactionBO.getTransactions(q, sinceId, count, orderBy);
             l.setTransactions(transactionList);
             l.setCount(transactionList.size());
-            l.setSinceId(transactionList.get(transactionList.size()-1).getId());
+            if (transactionList.size() > 0) {
+                l.setSinceId(transactionList.get(transactionList.size()-1).getId());
+            }
             result.setTransactions(l);
         }
         return result;
