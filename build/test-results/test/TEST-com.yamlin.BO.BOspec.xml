@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.yamlin.BO.BOspec" tests="3" skipped="0" failures="0" errors="0" timestamp="2017-02-11T07:16:14" hostname="risewinter-lm" time="0.029">
-  <properties/>
-  <testcase name="test Trader BO" classname="com.yamlin.BO.BOspec" time="0.021"/>
-  <testcase name="test Trader return null" classname="com.yamlin.BO.BOspec" time="0.0"/>
-  <testcase name="test getTransactions" classname="com.yamlin.BO.BOspec" time="0.008"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
