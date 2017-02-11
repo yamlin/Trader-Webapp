@@ -21,7 +21,7 @@ public class DefaultResourceContext implements ResourceContext {
     private HttpServletResponse response;
 
 
-    private final String apiKey = "gaqcRZE4bd58gSAJH3XsLYBo1EvwIQo88IfYL1L5";
+    private final String apiKey = "";
 
     /**
      * Constructor.
@@ -56,11 +56,11 @@ public class DefaultResourceContext implements ResourceContext {
      */
     @Override
     public void authenticate() {
-        String key = request.getHeader("x-api-key");
+//        String key = request.getHeader("x-api-key");
         // do something
-        if (!apiKey.equals(key)) {
-            throw new ResourceException(ResourceException.FORBIDDEN);
-        }
+//        if (!apiKey.equals(key)) {
+//            throw new ResourceException(ResourceException.FORBIDDEN);
+//        }
     }
 
     /**
