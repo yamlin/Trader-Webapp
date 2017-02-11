@@ -11,6 +11,7 @@ import com.yamlin.parsec_generated.*;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * WebappHandlerImpl is interface implementation that implement WebappHandler interface.
@@ -19,20 +20,29 @@ public class WebappHandlerImpl implements WebappHandler {
     @Inject private TransactionBO transactionBO;
     @Inject private TraderBO traderBO;
 
-
     @Override
-    public TraderList getTraders(ResourceContext context, String q, String sinceId, Integer count, String orderBy) {
-        return traderBO.getTrader(q, sinceId, count, orderBy);
+    public TraderList getTraders(ResourceContext context, String q, Long offset, Integer count, String orderBy) {
+        TraderList traderList = new TraderList();
+        traderList.setTraders(traderBO.getTrader(q, offset, count, orderBy));
+        traderList.setCount(traderList.getTraders().size());
+        traderList.setNextOffset(offset+traderList.getTraders().size());
+        return traderList;
     }
 
     @Override
-    public TransactionList getTransactions(ResourceContext context, String q, String sinceId, Integer count, String orderBy) {
-        return transactionBO.getTransactions(q);
-    }
-
-    @Override
-    public TransactionSummary getTransactionSummary(ResourceContext context, String q, String op) {
-        return transactionBO.getTransactions(q, op);
+    public TransactionResult getTransactions(ResourceContext context, String q, String op, String sinceId, Integer count, String orderBy) {
+        TransactionResult result = new TransactionResult();
+        if (op != null) {
+            result.setSummary(transactionBO.getTransactions(q, op));
+        } else {
+            TransactionList l = new TransactionList();
+            List<Transaction> transactionList = transactionBO.getTransactions(q, sinceId, count, orderBy);
+            l.setTransactions(transactionList);
+            l.setCount(transactionList.size());
+            l.setSinceId(transactionList.get(transactionList.size()-1).getId());
+            result.setTransactions(l);
+        }
+        return result;
     }
 
     @Override

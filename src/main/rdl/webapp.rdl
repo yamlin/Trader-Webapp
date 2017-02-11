@@ -2,8 +2,6 @@ namespace com.yamlin;
 name webapp;
 version 1;
 
-
-
 type Trader struct {
     String name (x_size="max=256") ;
     String city (x_size="max=256");
@@ -19,11 +17,9 @@ type Transaction struct {
 
 type TraderList struct {
     Array<Trader> traders;
-    Int32 nextPage;
-    Int32 offset;
+    Int64 nextOffset;
+    Int32 count;
 }
-
-
 
 type TransactionSummary struct {
     String op (x_size="max=20");
@@ -32,13 +28,19 @@ type TransactionSummary struct {
 
 type TransactionList struct {
     Array<Transaction> transactions;
-    Int32 sinceId;
+    String sinceId;
+    Int32 count;
 }
 
-resource TraderList GET "/traders?q={q}&offset={offset}&count={count}&orderBy={orderBy}" (name=getTraders){
+type TransactionResult struct {
+    TransactionSummary summary;
+    TransactionList transactions;
+}
+
+resource TraderList GET "/prod/traders?q={q}&offset={offset}&count={count}&orderBy={orderBy}" (name=getTraders){
     authenticate;
     String q (optional);
-    String offset (optional, default="0");
+    Int64 offset (optional, default=0);
     Int32 count (optional, default=50);
     String orderBy (optional, default="-name");
 
@@ -51,26 +53,13 @@ resource TraderList GET "/traders?q={q}&offset={offset}&count={count}&orderBy={o
     }
 }
 
-resource TransactionList GET "/prod/transactions?q={q}&sinceId={sinceId}&count={count}&orderBy={orderBy}" (name=getTransactions){
-    authenticate;
-    String q (optional);
-    String sinceId (optional, default="0");
-    Int32 count (optional, default=50);
-    String orderBy (optional, default="-value");
-
-    expected OK;
-    exceptions {
-        ResourceError INTERNAL_SERVER_ERROR;
-        ResourceError BAD_REQUEST;
-        ResourceError UNAUTHORIZED;
-        ResourceError FORBIDDEN;
-    }
-}
-
-resource TransactionSummary GET "/prod/transactionSummary?q={q}&op={op}" (name=getTransactionSummary) {
+resource TransactionResult GET "/prod/transactions?q={q}&op={op}&sinceId={sinceId}&count={count}&orderBy={orderBy}" (name=getTransactions){
     authenticate;
     String q (optional);
     String op (optional);
+    String sinceId (optional, default="0");
+    Int32 count (optional, default=50);
+    String orderBy (optional, default="-value");
 
     expected OK;
     exceptions {

@@ -6,6 +6,7 @@ import com.yamlin.parsec_generated.TransactionList;
 import com.yamlin.parsec_generated.TransactionSummary;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,13 +19,16 @@ public class TransactionBO {
         this.dao = dao;
     }
 
-    public TransactionList getTransactions(String q) {
+    public List<Transaction> getTransactions(String q, String sinceId, Integer count, String orderBy) {
         if (q.contains("startTs=1451606400000") && q.contains("endTs=1483228799000")) {
+            // you can add with sinceId, count, orderBy
             List<Transaction> l = dao.searchTransactionTsInterval(
                     new Long(1451606400000L), new Long(1483228799000L));
-            return new TransactionList().setTransactions(l);
+            // sort orderBy...
+            // Collections.sort(...);
+            return l;
         }
-        return null;
+        return new ArrayList<>();
     }
 
     public TransactionSummary getTransactions(String q, String op) {

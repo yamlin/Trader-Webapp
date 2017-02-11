@@ -6,6 +6,7 @@ package com.yamlin.BO;
 import com.yamlin.BO.TraderBO
 import com.yamlin.DAO.TraderDAO
 import com.yamlin.DAO.TransactionDAO
+import com.yamlin.parsec_generated.TransactionSummary
 import org.junit.Assert
 import spock.lang.*
 
@@ -21,20 +22,21 @@ class BOspec extends Specification {
 
     def "test Trader BO"() {
         expect:
-        def result = traderBo.getTrader("city=Singapore", null, null, null)
-        result != null
-        result.getTraders().size() == 2
-    }
-
-    def "test Trader return null"() {
-        expect:
-        traderBo.getTrader("    ", null, null, null) == null
+        def result = traderBo.getTrader("city=Singapore", 0, 0, "")
+        result.size() == 2
     }
 
     def "test getTransactions"() {
         expect:
-        def result = transactionBo.getTransactions("startTs=1451606400000+endTs=1483228799000")
-        result.getTransactions().size() == 1
-        result.getTransactions().get(0).getValue() == 205
+        def result = transactionBo.getTransactions(
+                "startTs=1451606400000+endTs=1483228799000", "", 0, "")
+        result.size() == 1
+        result.get(0).getValue() == 205
+    }
+
+    def "test getTransactionSummary"() {
+        expect:
+        TransactionSummary result = transactionBo.getTransactions("trader.city=Beijing", "average")
+        result.getSummary() == 200.5
     }
 }

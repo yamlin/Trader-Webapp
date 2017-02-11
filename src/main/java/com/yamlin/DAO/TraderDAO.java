@@ -20,6 +20,6 @@ public class TraderDAO {
             return traderList;
         }
 
-        return null;
+        return new ArrayList<>();
     }
 }

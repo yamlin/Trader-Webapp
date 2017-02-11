@@ -18,7 +18,7 @@ public class TransactionDAO {
                     .setValue(205));
             return list;
         }
-        return null;
+        return new ArrayList<>();
     }
 
     public double findHighestTransaction() {
