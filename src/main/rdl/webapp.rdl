@@ -1,0 +1,82 @@
+namespace com.yamlin;
+name webapp;
+version 1;
+
+
+
+type Trader struct {
+    String name (x_size="max=256") ;
+    String city (x_size="max=256");
+    String id (x_size="max=64");
+}
+
+type Transaction struct {
+    Int64 timestamp;
+    Float64 value;
+    String traderId (x_size="max=64");
+    String id (x_size="max=64");
+}
+
+type TraderList struct {
+    Array<Trader> traders;
+    Int32 nextPage;
+    Int32 offset;
+}
+
+
+
+type TransactionSummary struct {
+    String op (x_size="max=20");
+    Float64 summary;
+}
+
+type TransactionList struct {
+    Array<Transaction> transactions;
+    Int32 sinceId;
+}
+
+resource TraderList GET "/traders?q={q}&offset={offset}&count={count}&orderBy={orderBy}" (name=getTraders){
+    authenticate;
+    String q (optional);
+    String offset (optional, default="0");
+    Int32 count (optional, default=50);
+    String orderBy (optional, default="-name");
+
+    expected OK;
+    exceptions {
+        ResourceError INTERNAL_SERVER_ERROR;
+        ResourceError BAD_REQUEST;
+        ResourceError UNAUTHORIZED;
+        ResourceError FORBIDDEN;
+    }
+}
+
+resource TransactionList GET "/prod/transactions?q={q}&sinceId={sinceId}&count={count}&orderBy={orderBy}" (name=getTransactions){
+    authenticate;
+    String q (optional);
+    String sinceId (optional, default="0");
+    Int32 count (optional, default=50);
+    String orderBy (optional, default="-value");
+
+    expected OK;
+    exceptions {
+        ResourceError INTERNAL_SERVER_ERROR;
+        ResourceError BAD_REQUEST;
+        ResourceError UNAUTHORIZED;
+        ResourceError FORBIDDEN;
+    }
+}
+
+resource TransactionSummary GET "/prod/transactionSummary?q={q}&op={op}" (name=getTransactionSummary) {
+    authenticate;
+    String q (optional);
+    String op (optional);
+
+    expected OK;
+    exceptions {
+        ResourceError INTERNAL_SERVER_ERROR;
+        ResourceError BAD_REQUEST;
+        ResourceError UNAUTHORIZED;
+        ResourceError FORBIDDEN;
+    }
+}

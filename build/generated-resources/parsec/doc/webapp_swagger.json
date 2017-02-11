@@ -1,0 +1,379 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "The webapp API",
+        "version": "1"
+    },
+    "basePath": "/api/webapp/v1",
+    "schemes": [],
+    "paths": {
+        "/prod/transactionSummary": {
+            "get": {
+                "tags": [
+                    "TransactionSummary"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "name": "op",
+                        "in": "query",
+                        "type": "string",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/TransactionSummary"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/ResourceError"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/ResourceError"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/ResourceError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ResourceError"
+                        }
+                    }
+                }
+            }
+        },
+        "/prod/transactions": {
+            "get": {
+                "tags": [
+                    "TransactionList"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "name": "sinceId",
+                        "in": "query",
+                        "type": "string",
+                        "required": false,
+                        "default": "0"
+                    },
+                    {
+                        "name": "count",
+                        "in": "query",
+                        "type": "integer",
+                        "format": "int32",
+                        "required": false,
+                        "default": 50
+                    },
+                    {
+                        "name": "orderBy",
+                        "in": "query",
+                        "type": "string",
+                        "required": false,
+                        "default": "-value"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/TransactionList"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/ResourceError"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/ResourceError"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/ResourceError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ResourceError"
+                        }
+                    }
+                }
+            }
+        },
+        "/traders": {
+            "get": {
+                "tags": [
+                    "TraderList"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "type": "string",
+                        "required": false,
+                        "default": "0"
+                    },
+                    {
+                        "name": "count",
+                        "in": "query",
+                        "type": "integer",
+                        "format": "int32",
+                        "required": false,
+                        "default": 50
+                    },
+                    {
+                        "name": "orderBy",
+                        "in": "query",
+                        "type": "string",
+                        "required": false,
+                        "default": "-name"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/TraderList"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/ResourceError"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/ResourceError"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/ResourceError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ResourceError"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "ParsecErrorBody": {
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "detail": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ParsecErrorDetail"
+                    }
+                },
+                "message": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message"
+            ]
+        },
+        "ParsecErrorDetail": {
+            "properties": {
+                "invalidValue": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message"
+            ]
+        },
+        "ParsecResourceError": {
+            "properties": {
+                "error": {
+                    "$ref": "#/definitions/ParsecErrorBody"
+                }
+            },
+            "required": [
+                "error"
+            ]
+        },
+        "ResourceError": {
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "code",
+                "message"
+            ]
+        },
+        "Trader": {
+            "properties": {
+                "city": {
+                    "type": "string",
+                    "example": ""
+                },
+                "id": {
+                    "type": "string",
+                    "example": ""
+                },
+                "name": {
+                    "type": "string",
+                    "example": ""
+                }
+            },
+            "required": [
+                "name",
+                "city",
+                "id"
+            ]
+        },
+        "TraderList": {
+            "properties": {
+                "nextPage": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": ""
+                },
+                "offset": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": ""
+                },
+                "traders": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Trader"
+                    }
+                }
+            },
+            "required": [
+                "traders",
+                "nextPage",
+                "offset"
+            ]
+        },
+        "Transaction": {
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": ""
+                },
+                "timestamp": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": ""
+                },
+                "traderId": {
+                    "type": "string",
+                    "example": ""
+                },
+                "value": {
+                    "type": "_Float64_",
+                    "example": ""
+                }
+            },
+            "required": [
+                "timestamp",
+                "value",
+                "traderId",
+                "id"
+            ]
+        },
+        "TransactionList": {
+            "properties": {
+                "sinceId": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": ""
+                },
+                "transactions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Transaction"
+                    }
+                }
+            },
+            "required": [
+                "transactions",
+                "sinceId"
+            ]
+        },
+        "TransactionSummary": {
+            "properties": {
+                "op": {
+                    "type": "string",
+                    "example": ""
+                },
+                "summary": {
+                    "type": "_Float64_",
+                    "example": ""
+                }
+            },
+            "required": [
+                "op",
+                "summary"
+            ]
+        }
+    }
+}

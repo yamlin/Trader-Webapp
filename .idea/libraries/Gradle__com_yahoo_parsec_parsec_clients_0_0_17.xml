@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.yahoo.parsec:parsec-clients:0.0.17">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.yahoo.parsec/parsec-clients/0.0.17/7f0ce40d49b86a211572d3570803343bbe31efe7/parsec-clients-0.0.17.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.yahoo.parsec/parsec-clients/0.0.17/aa69234229c8c437e4e363acaa36202bc4934346/parsec-clients-0.0.17-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

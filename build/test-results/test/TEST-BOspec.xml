@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="BOspec" tests="1" skipped="0" failures="1" errors="0" timestamp="2017-02-11T06:53:22" hostname="risewinter-lm" time="0.214">
+  <properties/>
+  <testcase name="test Trader BO" classname="BOspec" time="0.214">
+    <failure message="groovy.lang.MissingPropertyException: No such property: traderDaox for class: BOspec&#10;Possible solutions: traderDao, traderBo" type="groovy.lang.MissingPropertyException">groovy.lang.MissingPropertyException: No such property: traderDaox for class: BOspec
+Possible solutions: traderDao, traderBo
+	at BOspec.$spock_initializeFields(BOspec.groovy:14)
+</failure>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
